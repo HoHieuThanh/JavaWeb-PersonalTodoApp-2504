@@ -14,6 +14,7 @@
         <th>Hạn</th>
         <th>Trạng thái</th>
         <th>Độ ưu tiên</th>
+        <th>Hành động</th>
     </tr>
     </thead>
     <tbody>
@@ -23,15 +24,27 @@
         <td th:text="${t.dueDate}"></td>
         <td th:text="${t.status}"></td>
         <td th:text="${t.priority}"></td>
+        <td>
+            <a th:href="@{/edit/{id}(id=${t.id})}">Sửa</a>
+            <a th:href="@{/delete/{id}(id=${t.id})}"
+               onclick="return confirm('Bạn có chắc muốn xóa?')">
+                Xóa
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>
 
 <hr>
+<div th:if="${message}" style="color: green">
+    <p th:text="${message}"></p>
+</div>
 
 <h2>Thêm công việc</h2>
 
-<form th:action="@{/add}" method="post" th:object="${todo}">
+<form th:action="@{/save}" method="post" th:object="${todo}">
+
+    <input type="hidden" th:field="*{id}"/>
 
     <div>
         Nội dung:
@@ -55,7 +68,7 @@
         <input type="text" th:field="*{priority}">
     </div>
 
-    <button type="submit">Thêm</button>
+    <button type="submit">Lưu</button>
 
 </form>
 
