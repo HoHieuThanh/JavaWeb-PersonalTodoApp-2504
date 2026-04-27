@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+
+<h2>Nhập tên của bạn</h2>
+
+<form th:action="@{/welcome}" method="post">
+    <input type="text" name="name">
+    <button type="submit">Bắt đầu</button>
+</form>
+
+<div style="color:red" th:if="${error}" th:text="${error}"></div>
+
+</body>
+</html>

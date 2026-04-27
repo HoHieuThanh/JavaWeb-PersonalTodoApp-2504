@@ -2,6 +2,7 @@ package com.ex.personaltodoapp.controller;
 
 import com.ex.personaltodoapp.model.entity.Todo;
 import com.ex.personaltodoapp.repository.TodoRepository;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,18 @@ public class TodoController {
     private TodoRepository todoRepository;
 
     @GetMapping("/")
-    public String listTodo(Model model) {
+    public String listTodo(Model model, HttpSession session) {
+        String ownerName = (String) session.getAttribute("ownerName");
+
+        if (ownerName == null) {
+            return "redirect:/welcome";
+        }
+        model.addAttribute("ownerName", ownerName);
         model.addAttribute("todos", todoRepository.findAll());
         model.addAttribute("todo", new Todo());
         return "list";
     }
+
 
     @PostMapping("/save")
     public String saveTodo(@Valid @ModelAttribute("todo") Todo todo,
